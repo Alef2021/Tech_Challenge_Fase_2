@@ -77,13 +77,16 @@ model.fit(X_train, y_train)
 
 #Efetuando previsao
 
-#y_pred = model.predict(X_test)
+y_pred = model.predict(X_test)
 
 #testes com valores de dias que não existem na base
 #y_pred = model.predict([[139.586,140.049,138.384,138.855,139.695,138.855]]) #02/07/2025
 #y_pred = model.predict([[139.051,141.304,139.051,139.586,140.049,138.384]]) #03/07/2025
 #y_pred = model.predict([[140.928,141.564,140.597,139.051,141.304,139.051]]) #04/07/2025
-y_pred = model.predict([[141.265,141.342,139.295,140.928,141.564,140.597]]) #05/07/2025
+#y_pred = model.predict([[141.265,141.342,139.295,140.928,141.564,140.597]]) #05/07/2025
 
 
-print(y_pred)
+
+
+acc = accuracy_score(y_test, y_pred)
+print(f"Acurácia: {acc:.2f} ({acc*100:.1f}%)")
