@@ -62,10 +62,10 @@ test = df_ibovespa.iloc[-30:]
 
 #selecionando as colunas de features e target
 
-X_train = train[["Abertura","Máxima","Mínima","Abertura_d-1","Máxima_d-1","Mínima_d-1"]]
+X_train = train[["Abertura","Máxima","Mínima"]]
 y_train = train['Target'].astype(int)
 
-X_test = test[["Abertura","Máxima","Mínima","Abertura_d-1","Máxima_d-1","Mínima_d-1"]]
+X_test = test[["Abertura","Máxima","Mínima"]]
 y_test = test['Target'].astype(int)
 
 
@@ -74,20 +74,15 @@ y_test = test['Target'].astype(int)
 model = LogisticRegression()
 
 
-#Adicionando StandardScale
-
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
+#################################################
 
 #trenar o modelo 
 
-model.fit(X_train_scaled, y_train)
+model.fit(X_train, y_train)
 
 #Efetuando previsao
 
-y_pred = model.predict(X_test_scaled)
+y_pred = model.predict(X_test)
 
 #testes com valores de dias que não existem na base
 #y_pred = model.predict([[139.586,140.049,138.384,138.855,139.695,138.855]]) #02/07/2025
@@ -105,20 +100,20 @@ print(f"Acurácia: {acc:.2f} ({acc*100:.1f}%)")
 
 
 
-print("Relatório de Classificação:")
-print(classification_report(y_test, y_pred, target_names=["Queda (0)", "Alta (1)"]))
+# print("Relatório de Classificação:")
+# print(classification_report(y_test, y_pred, target_names=["Queda (0)", "Alta (1)"]))
 
 
-# Calcula a matriz de confusão novamente (só por garantia)
-cm = confusion_matrix(y_test, y_pred)
+# # Calcula a matriz de confusão novamente (só por garantia)
+# cm = confusion_matrix(y_test, y_pred)
 
-#matriz de confusão
-cm = confusion_matrix(y_test, y_pred)
-sns.heatmap(cm, annot=True, fmt='d')
-plt.title('Matriz de Confusão')
-plt.xlabel('Previsto')
-plt.ylabel('Real')
-plt.show()
+# #matriz de confusão
+# cm = confusion_matrix(y_test, y_pred)
+# sns.heatmap(cm, annot=True, fmt='d')
+# plt.title('Matriz de Confusão')
+# plt.xlabel('Previsto')
+# plt.ylabel('Real')
+# plt.show()
 
 #########################################################################################################
 
