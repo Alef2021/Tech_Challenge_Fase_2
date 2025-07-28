@@ -38,7 +38,7 @@ df_ibovespa["Abertura"] = df_ibovespa["Abertura"].str.replace(".", "").astype(fl
 df_ibovespa["Máxima"] = df_ibovespa["Máxima"].str.replace(".", "").astype(float)
 df_ibovespa["Mínima"] = df_ibovespa["Mínima"].str.replace(".", "").astype(float) 
 
-
+df_ibovespa['MM3'] = df_ibovespa['Último'].rolling(window=3).mean()
 #ordenando por data 
 df_ibovespa = df_ibovespa.sort_values('Data')
 
@@ -47,12 +47,15 @@ df_ibovespa = df_ibovespa.sort_values('Data')
 df_ibovespa['Abertura_d-1'] = df_ibovespa['Abertura'].shift(1)
 df_ibovespa['Máxima_d-1'] = df_ibovespa['Máxima'].shift(1)
 df_ibovespa['Mínima_d-1'] = df_ibovespa['Mínima'].shift(1)
+df_ibovespa["Último_d-1"] = df_ibovespa["Último"].shift(1)
 
 
 # Criando minha variavel target, VAR% > 0 = 1 se não = 0
 df_ibovespa["Target"] = df_ibovespa["Var%"].apply(categoriza_dia)
 
 df_ibovespa = df_ibovespa.dropna()
+
+
 
 # df_ibovespa.tail(3)
 
@@ -62,13 +65,21 @@ test = df_ibovespa.iloc[-30:]
 
 #selecionando as colunas de features e target
 
-X_train = train[["Abertura","Máxima","Mínima"]]
+X_train = train[["Abertura","Abertura_d-1","Máxima_d-1","Mínima_d-1","MM3","Último_d-1"]]
 y_train = train['Target'].astype(int)
+#[["Abertura","Abertura_d-1","Máxima_d-1","Mínima_d-1","Último_d-1","MM5"]] 70%
+#[["Abertura","Abertura_d-1","Máxima_d-1","Mínima_d-1","MM5"]] 73%
+#["Abertura","Abertura_d-1","Máxima_d-1","Mínima_d-1","MM3"]  80%
+#adicionando mais colunas o modelo tem Overfitting
 
-X_test = test[["Abertura","Máxima","Mínima"]]
+X_test = test[["Abertura","Abertura_d-1","Máxima_d-1","Mínima_d-1","MM3","Último_d-1"]]
 y_test = test['Target'].astype(int)
 
 
+
+# scaler = StandardScaler()
+# X_train_scaled = scaler.fit_transform(X_train)
+# X_test_scaled = scaler.transform(X_test)
 #criar o modelo de regressão logistica
 
 model = LogisticRegression()
@@ -100,10 +111,10 @@ print(f"Acurácia: {acc:.2f} ({acc*100:.1f}%)")
 
 
 
-# print("Relatório de Classificação:")
-# print(classification_report(y_test, y_pred, target_names=["Queda (0)", "Alta (1)"]))
+print("Relatório de Classificação:")
+print(classification_report(y_test, y_pred, target_names=["Queda (0)", "Alta (1)"]))
 
-
+df_ibovespa.corr()
 # # Calcula a matriz de confusão novamente (só por garantia)
 # cm = confusion_matrix(y_test, y_pred)
 
@@ -146,3 +157,4 @@ print(f"Acurácia: {acc:.2f} ({acc*100:.1f}%)")
 # plt.ylabel('Quantidade de Dias')
 # plt.tight_layout()
 # plt.show()
+
