@@ -56,4 +56,6 @@ Ela se mostrou mais estável, precisa e fácil de interpretar, especialmente em 
 
 Já o Random Forest pode ser útil em análises mais aprofundadas e com maior volume de dados.
 
-Obrigado por assistir à nossa apresentação!"
+Obrigado por assistir à nossa apresentação!!!"
+
+
