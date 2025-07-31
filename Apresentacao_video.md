@@ -26,7 +26,7 @@ Testamos dois modelos principais:
 
 "A Regressão Logística apresentou 83% de acurácia, acertando 25 dos 30 dias previstos. Analisando a matriz de confusão, o modelo teve um bom equilíbrio entre acertos de altas e quedas, cometendo poucos erros. Com dados escalonados, houve uma leve melhora no desempenho.
 
-| ![Ibovespa gráfico](img/matriz_confusao_escalonada.png) | ![Ibovespa gráfico 2](img\matriz_confusao_escalonada.png) |
+| ![Ibovespa gráfico](img/matriz_confusao_nao_escalonada.png) | ![Ibovespa gráfico 2](img/matriz_confusao_escalonada.png) |
 |--------------------------------------------|--------------------------------------------|
 
 Isso mostra que o modelo é confiável e consistente para prever o movimento diário do Ibovespa, auxiliando decisões no mercado."
